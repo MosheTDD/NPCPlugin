@@ -1,0 +1,7 @@
+name: NPC
+author: MosheTDD
+main: me.moshe.npc.NPC
+version: 1.0
+
+commands:
+  npc:

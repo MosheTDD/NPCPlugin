@@ -1,6 +1,6 @@
-package me.moshe.npc.util;
+package me.border.npcs.util;
 
-import me.moshe.npc.NPC;
+import me.border.npcs.NPCs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    static NPC plugin;
-    public Utils(NPC plugin){
+    static NPCs plugin;
+    public Utils(NPCs plugin){
         this.plugin = plugin;
     }
 

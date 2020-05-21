@@ -1,22 +1,22 @@
-package me.moshe.npc.ver1_14;
+package me.border.npcs.ver1_13;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_14_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
 
 
-class NPCManager1_14 {
+class NPCManager1_13 {
 
 
-    public NPCManager1_14(String name, Location location) {
+    public NPCManager1_13(String name, Location location) {
         entityID = (int) Math.ceil(Math.random() * 1000) + 2000;
         gameprofile = new GameProfile(UUID.randomUUID(), name);
         this.location = location.clone();
@@ -30,7 +30,7 @@ class NPCManager1_14 {
     private GameProfile gameprofile;
     private EntityPlayer npc;
     private WorldServer nmsWorld;
-    private DedicatedServer nmsServer;
+    private MinecraftServer nmsServer;
 
     public void animation(int animation) {
         PacketPlayOutAnimation packet = new PacketPlayOutAnimation();
@@ -49,16 +49,20 @@ class NPCManager1_14 {
         setValue(packet, "f", location.getYaw());
         setValue(packet, "g", location.getPitch());
         DataWatcher watcher = npc.getDataWatcher();
-        watcher.set(new DataWatcherObject<Byte>(15, DataWatcherRegistry.a), (byte) 0xFF);
+        watcher.set(new DataWatcherObject<>(13, DataWatcherRegistry.a), (byte) 0xFF);
         setValue(packet, "h", watcher);
         addToTablist();
         sendPacket(packet);
     }
 
-    public void entityMetadata(EntityPose pose) {
+    public void entityMetadata(byte m) {
         try {
-            DataWatcher dataWatcher = npc.getDataWatcher();
-            dataWatcher.set(DataWatcherRegistry.s.a(6), pose);
+            EntityEgg fakeEntity = new EntityEgg(null);
+            Field field = Entity.class.getDeclaredField("ac");
+            field.setAccessible(true);
+            DataWatcherObject<Byte> datawatcherObject = (DataWatcherObject<Byte>) field.get(null);
+            DataWatcher dataWatcher = new DataWatcher(fakeEntity);
+            dataWatcher.register(datawatcherObject, m);
             PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
             sendPacket(packet);
         }catch (Exception ex){

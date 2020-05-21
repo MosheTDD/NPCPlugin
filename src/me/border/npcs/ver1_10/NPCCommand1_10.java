@@ -1,6 +1,6 @@
-package me.moshe.npc.ver1_10;
+package me.border.npcs.ver1_10;
 
-import me.moshe.npc.NPC;
+import me.border.npcs.NPCs;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -9,11 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static me.moshe.npc.util.Utils.*;
+import static me.border.npcs.util.Utils.*;
 public class NPCCommand1_10 implements CommandExecutor {
-    private NPC plugin;
+    private NPCs plugin;
 
-    public NPCCommand1_10(NPC plugin) {
+    public NPCCommand1_10(NPCs plugin) {
         this.plugin = plugin;
         plugin.getCommand("npc").setExecutor(this);
     }

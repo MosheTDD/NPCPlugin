@@ -1,4 +1,4 @@
-package me.moshe.npc.ver1_12;
+package me.border.npcs.ver1_12;
 
 
 import com.mojang.authlib.GameProfile;

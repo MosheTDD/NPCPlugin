@@ -1,21 +1,22 @@
-package me.moshe.npc.ver1_10;
+package me.border.npcs.ver1_9;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_10_R1.*;
+import net.minecraft.server.v1_9_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_10_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.UUID;
 
-class NPCManager1_10 {
 
-    public NPCManager1_10(String name, Location location) {
+class NPCManager1_9 {
+
+    public NPCManager1_9(String name, Location location) {
         entityID = (int) Math.ceil(Math.random() * 1000) + 2000;
         gameprofile = new GameProfile(UUID.randomUUID(), name);
         this.location = location.clone();
@@ -57,7 +58,7 @@ class NPCManager1_10 {
     public void entityMetadata(byte m) {
         try {
             EntityEgg fakeEntity = new EntityEgg(null);
-            Field field = Entity.class.getDeclaredField("aa");
+            Field field = Entity.class.getDeclaredField("ay");
             field.setAccessible(true);
             DataWatcherObject<Byte> datawatcherObject = (DataWatcherObject<Byte>) field.get(null);
             DataWatcher dataWatcher = new DataWatcher(fakeEntity);
@@ -130,5 +131,6 @@ class NPCManager1_10 {
             sendPacket(packet,player);
         }
     }
-}
 
+
+}

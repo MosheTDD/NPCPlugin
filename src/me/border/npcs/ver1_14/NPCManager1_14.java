@@ -1,23 +1,22 @@
-package me.moshe.npc.ver1_9;
+package me.border.npcs.ver1_14;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_9_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_9_R2.util.CraftChatMessage;
+import org.bukkit.craftbukkit.v1_14_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.UUID;
 
 
-class NPCManager1_9 {
+class NPCManager1_14 {
 
-    public NPCManager1_9(String name, Location location) {
+
+    public NPCManager1_14(String name, Location location) {
         entityID = (int) Math.ceil(Math.random() * 1000) + 2000;
         gameprofile = new GameProfile(UUID.randomUUID(), name);
         this.location = location.clone();
@@ -31,7 +30,7 @@ class NPCManager1_9 {
     private GameProfile gameprofile;
     private EntityPlayer npc;
     private WorldServer nmsWorld;
-    private MinecraftServer nmsServer;
+    private DedicatedServer nmsServer;
 
     public void animation(int animation) {
         PacketPlayOutAnimation packet = new PacketPlayOutAnimation();
@@ -50,20 +49,16 @@ class NPCManager1_9 {
         setValue(packet, "f", location.getYaw());
         setValue(packet, "g", location.getPitch());
         DataWatcher watcher = npc.getDataWatcher();
-        watcher.set(new DataWatcherObject<>(13, DataWatcherRegistry.a), (byte) 0xFF);
+        watcher.set(new DataWatcherObject<Byte>(15, DataWatcherRegistry.a), (byte) 0xFF);
         setValue(packet, "h", watcher);
         addToTablist();
         sendPacket(packet);
     }
 
-    public void entityMetadata(byte m) {
+    public void entityMetadata(EntityPose pose) {
         try {
-            EntityEgg fakeEntity = new EntityEgg(null);
-            Field field = Entity.class.getDeclaredField("ay");
-            field.setAccessible(true);
-            DataWatcherObject<Byte> datawatcherObject = (DataWatcherObject<Byte>) field.get(null);
-            DataWatcher dataWatcher = new DataWatcher(fakeEntity);
-            dataWatcher.register(datawatcherObject, m);
+            DataWatcher dataWatcher = npc.getDataWatcher();
+            dataWatcher.set(DataWatcherRegistry.s.a(6), pose);
             PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
             sendPacket(packet);
         }catch (Exception ex){
@@ -132,6 +127,4 @@ class NPCManager1_9 {
             sendPacket(packet,player);
         }
     }
-
-
 }

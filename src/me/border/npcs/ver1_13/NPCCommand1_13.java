@@ -1,6 +1,7 @@
-package me.moshe.npc.ver1_13;
+package me.border.npcs.ver1_13;
 
-import me.moshe.npc.NPC;
+import me.border.npcs.NPCs;
+import me.border.npcs.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -9,12 +10,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static me.moshe.npc.util.Utils.*;
-
 public class NPCCommand1_13 implements CommandExecutor {
-    private NPC plugin;
+    private NPCs plugin;
 
-    public NPCCommand1_13(NPC plugin) {
+    public NPCCommand1_13(NPCs plugin) {
         this.plugin = plugin;
         plugin.getCommand("npc").setExecutor(this);
     }
@@ -22,11 +21,11 @@ public class NPCCommand1_13 implements CommandExecutor {
     public NPCManager1_13 npcManager13;
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args){
-        if(!playerCheck(sender))return true;
+        if(!Utils.playerCheck(sender))return true;
         Player p = (Player) sender;
-        if(!permCheck(p, "npc.npc"))return true;
-        if(!argsCheck(p, 0, args))return true;
-        Location location = new Location(p.getWorld(), cd("npcLocation.x"), cd("npcLocation.y"), cd("npcLocation.z"));
+        if(!Utils.permCheck(p, "npc.npc"))return true;
+        if(!Utils.argsCheck(p, 0, args))return true;
+        Location location = new Location(p.getWorld(), Utils.cd("npcLocation.x"), Utils.cd("npcLocation.y"), Utils.cd("npcLocation.z"));
         npcManager13 = new NPCManager1_13("Bob", location);
         npcManager13.spawn();
         new BukkitRunnable(){

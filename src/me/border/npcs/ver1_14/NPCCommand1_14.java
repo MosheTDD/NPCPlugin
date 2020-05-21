@@ -1,6 +1,6 @@
-package me.moshe.npc.ver1_14;
+package me.border.npcs.ver1_14;
 
-import me.moshe.npc.NPC;
+import me.border.npcs.NPCs;
 import net.minecraft.server.v1_14_R1.Entity;
 import net.minecraft.server.v1_14_R1.EntityPose;
 import org.bukkit.Bukkit;
@@ -11,12 +11,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static me.moshe.npc.util.Utils.*;
+import static me.border.npcs.util.Utils.*;
 
 public class NPCCommand1_14 implements CommandExecutor {
-    private NPC plugin;
+    private NPCs plugin;
 
-    public NPCCommand1_14(NPC plugin) {
+    public NPCCommand1_14(NPCs plugin) {
         this.plugin = plugin;
         plugin.getCommand("npc").setExecutor(this);
     }

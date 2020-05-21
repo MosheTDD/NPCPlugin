@@ -1,4 +1,4 @@
-package me.moshe.npc.ver1_8;
+package me.border.npcs.ver1_8;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_8_R3.*;
